@@ -1,0 +1,26 @@
+@localhost=localhost:4004/odata/v4/main
+@id= a6118c05-7d0c-4520-8bd1-245480242a73
+
+GET http://{{localhost}}/Customers
+Content-Type: application/json
+
+###
+
+POST http://{{localhost}}/Customers
+Content-Type: application/json
+
+{
+    "id":"a6118c05-7d0c-4520-8bd1-245480242a73",
+    "firstName":"John",
+    "lastName":"Doe",
+    "email":"john.Doe@moovi.com"
+}
+
+###
+
+PUT http://{{localhost}}/Customers({{id}})
+Content-Type: application/json
+
+{
+    "firstName":"Johnatan"
+}
