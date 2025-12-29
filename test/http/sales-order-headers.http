@@ -50,3 +50,13 @@ GET http://localhost:4004/odata/v4/main/SalesOrderHeaders?$filter=totalAmount le
 
 # Expandindo os items
 GET http://localhost:4004/odata/v4/main/SalesOrderHeaders?$filter=totalAmount le 200000
+
+###
+
+# Expandindo os items, produtos e customers
+GET http://localhost:4004/odata/v4/main/SalesOrderHeaders?$expand=items($expand=product),customer
+
+###
+
+# Expandindo os items, produtos e customers
+GET http://localhost:4004/odata/v4/main/SalesOrderHeaders?$expand=items($expand=product),customer
