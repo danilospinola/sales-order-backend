@@ -76,3 +76,9 @@ GET http://{{localhost}}/SalesOrderHeaders/$count
 ###
 # Paginando os registros
 GET http://{{localhost}}/SalesOrderHeaders?$skip=10&$top=5
+
+###
+
+# Buscando dados com $search
+GET http://{{localhost}}/Customers?$search=firstName2
+Content-Type: application/json
