@@ -82,3 +82,9 @@ GET http://{{localhost}}/SalesOrderHeaders?$skip=10&$top=5
 # Buscando dados com $search
 GET http://{{localhost}}/Customers?$search=firstName2
 Content-Type: application/json
+
+###
+
+# Ordenando dados com $orderby
+GET http://{{localhost}}/Customers?$orderby=firstName desc,lastName
+Content-Type: application/json
