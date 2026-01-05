@@ -13,19 +13,19 @@ Content-Type: application/json
 
 {
     "id": "{{id}}",
-    "customerId": "{{CustomerId}}",
+    "customer_id": "{{CustomerId}}",
     "items": [
         {
-            "id": "",
-            "header": "{{id}}",
-            "productId": "{{productId}}",
+            "id": "c23ccfc1-2d10-4274-8e1c-6aa7d95e0300",
+            "header_id": "{{id}}",
+            "product_id": "{{productId}}",
             "quantity": 2,
             "price": 19.99
         },
         {
-            "id": "",
-            "header": "{{id}}",
-            "productId": "12345678-90ab-cdef-1234-567890abcdef",
+            "id": "1463f1d6-4c71-4822-9497-86ede7ba9f2b",
+            "header_id": "{{id}}",
+            "product_id": "12345678-90ab-cdef-1234-567890abcdef",
             "quantity": 1,
             "price": 9.99
         }
