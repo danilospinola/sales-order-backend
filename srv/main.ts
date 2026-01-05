@@ -2,6 +2,17 @@ import cds, { Request, Service } from '@sap/cds';
 import { Customers, SalesOrderItem, Product, Products, SalesOrderHeaders, SalesOrderItems } from '@cds-models/sales';
 
 export default (service: Service) => {
+    service.before('READ', '*', (request: Request) => {
+        if (!request.user.is('read_only_user')) {
+            return request.reject(403, 'Não autorizado');
+        }
+    });
+
+    service.before(['WRITE', 'DELETE'], '*', (request: Request) => {
+        if (!request.user.is('admin')) {
+            return request.reject(403, 'Não autorizada a escrita/deleção');
+        }
+    });
     service.after('READ', 'Customers', (results: Customers) => {
         results.forEach(customer => {
             if (customer.email?.includes('@')) {
@@ -41,33 +52,33 @@ export default (service: Service) => {
 
 
     });
-    
+
 
     service.after('CREATE', 'SalesOrderHeaders', async (results: SalesOrderHeaders) => {
-    const headersAsArray = Array.isArray(results) ? results : [results] as SalesOrderHeaders;
+        const headersAsArray = Array.isArray(results) ? results : [results] as SalesOrderHeaders;
 
-    for (const header of headersAsArray) {
-        const items = header.items as SalesOrderItems;
+        for (const header of headersAsArray) {
+            const items = header.items as SalesOrderItems;
 
-        const productsData = items.map(item => ({
-            id: item.product_id as string,
-            quantity: item.quantity as number
-        }));
+            const productsData = items.map(item => ({
+                id: item.product_id as string,
+                quantity: item.quantity as number
+            }));
 
-        const productsIds: string[] = productsData.map((productData) => productData.id);
-        const productsQuery = SELECT.from('sales.Products').where({ id: productsIds });
-        const products: Products = await cds.run(productsQuery);
+            const productsIds: string[] = productsData.map((productData) => productData.id);
+            const productsQuery = SELECT.from('sales.Products').where({ id: productsIds });
+            const products: Products = await cds.run(productsQuery);
 
-        for (const productData of productsData) {
-            const foundProduct = products.find(product => product.id === productData.id) as Product;
-            
-            foundProduct.stock = (foundProduct.stock as number) - productData.quantity;
+            for (const productData of productsData) {
+                const foundProduct = products.find(product => product.id === productData.id) as Product;
 
-            await cds.update('sales.Products')
-                .where({ id: foundProduct.id })
-                .with({ stock: foundProduct.stock });
+                foundProduct.stock = (foundProduct.stock as number) - productData.quantity;
+
+                await cds.update('sales.Products')
+                    .where({ id: foundProduct.id })
+                    .with({ stock: foundProduct.stock });
+            }
         }
-    }
-});
+    });
 }
 

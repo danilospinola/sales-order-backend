@@ -6,11 +6,12 @@
 
 GET http://{{localhost}}/SalesOrderHeaders
 Content-Type: application/json
+Authorization: Basic danilo:Inicial@123456
 
 ###
 POST  http://{{localhost}}/SalesOrderHeaders
 Content-Type: application/json
-
+Authorization: Basic danilo:Inicial@123456
 {
     "id": "{{id}}",
     "customer_id": "{{CustomerId}}",
