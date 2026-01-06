@@ -11,7 +11,7 @@
                 "kind": "basic",
                 "users": {
                     "danilo":{
-                        "password": "Inicial@123456",
+                        "password": "123456",
                         "roles": ["admin"],
                         "attr":{
                             "id":1,
@@ -19,7 +19,7 @@
                         }
                     },
                     "joaozinho":{
-                        "password": "Inicial@123456",
+                        "password": "123456",
                         "roles": ["read_only_user"],
                         "attr":{
                             "id":2,

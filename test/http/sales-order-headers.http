@@ -6,37 +6,39 @@
 
 GET http://{{localhost}}/SalesOrderHeaders
 Content-Type: application/json
-Authorization: Basic danilo:Inicial@123456
+Authorization: Basic ZGFuaWxvOjEyMzQ1Ng==
 
 ###
-POST  http://{{localhost}}/SalesOrderHeaders
+POST http://{{localhost}}/SalesOrderHeaders
 Content-Type: application/json
-Authorization: Basic danilo:Inicial@123456
+Authorization: Basic ZGFuaWxvOjEyMzQ1Ng==
+
 {
-    "id": "{{id}}",
-    "customer_id": "{{CustomerId}}",
-    "items": [
-        {
-            "id": "c23ccfc1-2d10-4274-8e1c-6aa7d95e0300",
-            "header_id": "{{id}}",
-            "product_id": "{{productId}}",
-            "quantity": 2,
-            "price": 19.99
-        },
-        {
-            "id": "1463f1d6-4c71-4822-9497-86ede7ba9f2b",
-            "header_id": "{{id}}",
-            "product_id": "12345678-90ab-cdef-1234-567890abcdef",
-            "quantity": 1,
-            "price": 9.99
-        }
-    ]
+  "id": "{{id}}",
+  "customer_id": "{{CustomerId}}",
+  "items": [
+    {
+      "id": "c23ccfc1-2d10-4274-8e1c-6aa7d95e0300",
+      "header_id": "{{id}}",
+      "product_id": "{{productId}}",
+      "quantity": 2,
+      "price": 19.99
+    },
+    {
+      "id": "1463f1d6-4c71-4822-9497-86ede7ba9f2b",
+      "header_id": "{{id}}",
+      "product_id": "12345678-90ab-cdef-1234-567890abcdef",
+      "quantity": 1,
+      "price": 9.99
+    }
+  ]
 }
 
 ###
 
 DELETE http://localhost:4004/odata/v4/main/SalesOrderHeaders(id="1234")
-content -type: application/json
+Content-Type: application/json
+
 ###
 
 # Buscar todos os pedidos maiores ou iguais a 2 milhões

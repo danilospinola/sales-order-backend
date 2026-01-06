@@ -2,17 +2,24 @@ import cds, { Request, Service } from '@sap/cds';
 import { Customers, SalesOrderItem, Product, Products, SalesOrderHeaders, SalesOrderItems } from '@cds-models/sales';
 
 export default (service: Service) => {
-    service.before('READ', '*', (request: Request) => {
-        if (!request.user.is('read_only_user')) {
-            return request.reject(403, 'Não autorizado');
-        }
+service.before('*', (req: Request) => {
+        console.log('====================================');
+        console.log(`[DEBUG] Usuário ID: ${req.user.id}`);
+        console.log(`[DEBUG] Tem role 'admin'? ${req.user.is('admin')}`);
+        console.log(`[DEBUG] Roles totais:`, JSON.stringify(req.user.roles)); // ou req.user['roles'] dependendo da versão
+        console.log('====================================');
     });
 
     service.before(['WRITE', 'DELETE'], '*', (request: Request) => {
+        if (request.user.is('anonymous')) {
+            return request.reject(401, 'Por favor, faça login.');
+        }
+
         if (!request.user.is('admin')) {
             return request.reject(403, 'Não autorizada a escrita/deleção');
         }
     });
+
     service.after('READ', 'Customers', (results: Customers) => {
         results.forEach(customer => {
             if (customer.email?.includes('@')) {
@@ -22,6 +29,7 @@ export default (service: Service) => {
     });
     service.before('CREATE', 'SalesOrderHeaders', async (request: Request) => {
         const params = request.data;
+        const items: SalesOrderItems = params.items;
 
         if (!params.customer_id) {
             return request.reject(400, 'Customer ID Inválido');
@@ -36,20 +44,24 @@ export default (service: Service) => {
         if (!customer) {
             return request.reject(404, 'Customer Não Encontrado');
         }
-        const productsIds: string[] = params.items.map((item: SalesOrderItem) => item.product_id);
+        const productsIds = params.items.map((item: SalesOrderItem) => item.product_id);
         const productQuery = SELECT.from('sales.Products').where({ id: productsIds });
-        const products = await cds.run(productQuery);
-        const dbproducts = products.map((product: Product) => product.id);
-        for (const item of params.items) {
-            const dbproduct = products.find((product: Product) => product.id === item.product_id);
+        const products: Products = await cds.run(productQuery);
+        for (const item of items) {
+            const dbproduct = products.find(product => product.id === item.product_id);
             if (!dbproduct) {
                 return request.reject(404, `Produto(s) ${item.product_id} Inválido(s)`);
             }
             if (dbproduct.stock === 0) {
-                return request.reject(400, `Produto(s) ${item.product_id} Fora de Estoque`);
+                return request.reject(400, `Produto(s) ${dbproduct.name} Fora de Estoque`);
             }
         }
 
+        let totalAmount = 0;
+        items.forEach(item => {
+            totalAmount += (item.price as number) * (item.quantity as number)
+        });
+        console.log(`Total Amount: ${totalAmount}`);
 
     });
 
