@@ -2,13 +2,6 @@ import cds, { Request, Service } from '@sap/cds';
 import { Customers, SalesOrderItem, Product, Products, SalesOrderHeaders, SalesOrderItems } from '@cds-models/sales';
 
 export default (service: Service) => {
-service.before('*', (req: Request) => {
-        console.log('====================================');
-        console.log(`[DEBUG] Usuário ID: ${req.user.id}`);
-        console.log(`[DEBUG] Tem role 'admin'? ${req.user.is('admin')}`);
-        console.log(`[DEBUG] Roles totais:`, JSON.stringify(req.user.roles)); // ou req.user['roles'] dependendo da versão
-        console.log('====================================');
-    });
 
     service.before(['WRITE', 'DELETE'], '*', (request: Request) => {
         if (request.user.is('anonymous')) {
@@ -61,7 +54,10 @@ service.before('*', (req: Request) => {
         items.forEach(item => {
             totalAmount += (item.price as number) * (item.quantity as number)
         });
-        console.log(`Total Amount: ${totalAmount}`);
+        if(totalAmount >= 30000){
+            totalAmount = totalAmount * 0.9; 
+        }
+        request.data.totalAmount = totalAmount;
 
     });
 
