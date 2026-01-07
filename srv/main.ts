@@ -1,5 +1,6 @@
 import cds, { Request, Service } from '@sap/cds';
 import { Customers, SalesOrderItem, Product, Products, SalesOrderHeaders, SalesOrderItems } from '@cds-models/sales';
+import { json } from 'node:stream/consumers';
 
 export default (service: Service) => {
 
@@ -54,15 +55,15 @@ export default (service: Service) => {
         items.forEach(item => {
             totalAmount += (item.price as number) * (item.quantity as number)
         });
-        if(totalAmount >= 30000){
-            totalAmount = totalAmount * 0.9; 
+        if (totalAmount >= 30000) {
+            totalAmount = totalAmount * 0.9;
         }
         request.data.totalAmount = totalAmount;
 
     });
 
 
-    service.after('CREATE', 'SalesOrderHeaders', async (results: SalesOrderHeaders) => {
+    service.after('CREATE', 'SalesOrderHeaders', async (results: SalesOrderHeaders, request: Request) => {
         const headersAsArray = Array.isArray(results) ? results : [results] as SalesOrderHeaders;
 
         for (const header of headersAsArray) {
@@ -86,7 +87,15 @@ export default (service: Service) => {
                     .where({ id: foundProduct.id })
                     .with({ stock: foundProduct.stock });
             }
+            const headersAsString = JSON.stringify(header);
+            const userAsString = JSON.stringify(request.user);
+            const log = [{
+                header_id: header.id,
+                user: userAsString,
+                orderData: headersAsString
+            }]
         }
+        await cds.create('sales.salesorderlogs').entries({});
     });
 }
 
