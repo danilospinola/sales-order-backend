@@ -24,31 +24,10 @@ export default (service: Service) => {
         const params = request.data;
         const items: SalesOrderItems = params.items;
 
-        if (!params.customer_id) {
-            return request.reject(400, 'Customer ID Inválido');
-        }
 
-        if (!params.items || params.items?.length === 0) {
-            return request.reject(400, 'Items Inválidos');
-        }
 
-        const customerQuery = SELECT.one.from('sales.Customers').where({ id: params.customer_id });
-        const customer = await cds.run(customerQuery);
-        if (!customer) {
-            return request.reject(404, 'Customer Não Encontrado');
-        }
-        const productsIds = params.items.map((item: SalesOrderItem) => item.product_id);
-        const productQuery = SELECT.from('sales.Products').where({ id: productsIds });
-        const products: Products = await cds.run(productQuery);
-        for (const item of items) {
-            const dbproduct = products.find(product => product.id === item.product_id);
-            if (!dbproduct) {
-                return request.reject(404, `Produto(s) ${item.product_id} Inválido(s)`);
-            }
-            if (dbproduct.stock === 0) {
-                return request.reject(400, `Produto(s) ${dbproduct.name} Fora de Estoque`);
-            }
-        }
+
+
 
         let totalAmount = 0;
         items.forEach(item => {
