@@ -1,7 +1,8 @@
 import cds, { Request, Service } from '@sap/cds';
-import { Customers, SalesOrderItem, Product, Products, SalesOrderHeaders, SalesOrderItems } from '@cds-models/sales';
+import { Customers, Product, Products, SalesOrderHeaders, SalesOrderItems } from '@cds-models/sales';
 import { customerController } from './factories/controllers/customer';
 import { FullRequestParams } from './protocols';
+import { salesOrderHeaderController } from './factories/controllers/sales-order-header';
 
 
 
@@ -21,23 +22,12 @@ export default (service: Service) => {
         (request as unknown as FullRequestParams<Customers>).results = customerController.afterRead(customerslist)
     });
     service.before('CREATE', 'SalesOrderHeaders', async (request: Request) => {
-        const params = request.data;
-        const items: SalesOrderItems = params.items;
-
-
-
-
-
-
-        let totalAmount = 0;
-        items.forEach(item => {
-            totalAmount += (item.price as number) * (item.quantity as number)
-        });
-        if (totalAmount >= 30000) {
-            totalAmount = totalAmount * 0.9;
+        const result = await salesOrderHeaderController.beforeCreate(request.data);
+        if (result.hasErrors) {
+            return request.reject(400, result.error?.message || 'Erro na validação do pedido de venda.');
         }
-        request.data.totalAmount = totalAmount;
-
+        console.log('Total Amount Calculated:', result.totalAmount);
+        request.data.totalAmount = result.totalAmount;
     });
 
 
@@ -69,11 +59,11 @@ export default (service: Service) => {
             const userAsString = JSON.stringify(request.user);
             const log = [{
                 header_id: header.id,
-                user: userAsString,
+                userdata: userAsString,
                 orderData: headersAsString
             }]
+            await cds.create('sales.SalesOrderLogs').entries(log);
         }
-        await cds.create('sales.salesorderlogs').entries({});
     });
 }
 
