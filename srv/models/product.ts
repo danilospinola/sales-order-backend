@@ -5,6 +5,11 @@ export type ProductProps = {
     stock: number;
 };
 
+export type SellValidationResult = {
+    hasErrors: boolean;
+    errors?: Error;
+};
+
 export class ProductModel {
     constructor(private props: ProductProps) { }
 
@@ -26,5 +31,22 @@ export class ProductModel {
 
     public get stock() {
         return this.props.stock;
+    }
+
+    public set stock(stock: number) {
+        this.props.stock = stock;
+    }
+
+    public sell(amount: number) :SellValidationResult{
+        if (amount > this.props.stock) {
+            return {
+                hasErrors: true,
+                errors: new Error(`Estoque insuficiente para o produto ${this.props.name}`)
+            };
+        }
+        this.stock -= amount;
+        return {
+            hasErrors: false
+        };
     }
 }

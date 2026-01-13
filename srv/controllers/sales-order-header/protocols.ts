@@ -1,4 +1,5 @@
-import { SalesOrderHeader } from "@cds-models/sales";
+import { SalesOrderHeader, SalesOrderHeaders } from "@cds-models/sales";
+import { User } from "@sap/cds";
 
 export type CreationPayloadValidationResult = {
     hasErrors: boolean;
@@ -8,4 +9,5 @@ export type CreationPayloadValidationResult = {
 
 export interface SalesOrderHeaderController {
         beforeCreate(params: SalesOrderHeader): Promise<CreationPayloadValidationResult>;
+        afterCreate(params: SalesOrderHeaders, loggedUser: User): Promise<void>;
 }
