@@ -1,6 +1,7 @@
 import js from '@eslint/js';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
+import prettier from 'eslint-plugin-prettier';
 
 export default [
     {
@@ -13,7 +14,19 @@ export default [
     {
         ignores: ['./gen/*.{js,ts}'],
         files: ['**/*.{mjs,js,ts}'],
+        plugins: {
+            prettier
+        },
         rules: {
+            'prettier/prettier': [
+                'error',
+                {
+                    singleQuote: true,
+                    tabwidth: 4,
+                    trailingComma: 'none',
+                    printWidth: 120,
+                }
+            ],
             '@typescript-eslint/no-unused-vars': [
                 'error', {
                     caughtErrors: 'all',
