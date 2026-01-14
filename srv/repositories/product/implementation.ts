@@ -6,7 +6,7 @@ import { Products } from '@cds-models/sales';
 
 export class ProductRepositoryImpl implements ProductRepository {
 
-    public async findByIds(ids: ProductProps["id"][]): Promise<ProductModel[] | null> {
+    public async findByIds(ids: ProductProps['id'][]): Promise<ProductModel[] | null> {
         const productQuery = SELECT.from('sales.Products').where({ id: ids });
         const products: Products = await cds.run(productQuery);
         if (products.length === 0) {
@@ -21,8 +21,8 @@ export class ProductRepositoryImpl implements ProductRepository {
     }
 
     public async updateStock(product: ProductModel): Promise<void> {
-                     await cds.update('sales.Products')
-                    .where({ id: product.id })
-                    .with({ stock: product.stock });
+        await cds.update('sales.Products')
+            .where({ id: product.id })
+            .with({ stock: product.stock });
     }
 }

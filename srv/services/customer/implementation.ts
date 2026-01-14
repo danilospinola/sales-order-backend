@@ -1,6 +1,6 @@
-import { Customers } from '@cds-models/sales'
-import { CustomerService } from './protocols'
-import { CustomerModel } from 'srv/models/customer'
+import { Customers } from '@cds-models/sales';
+import { CustomerModel } from 'srv/models/customer';
+import { CustomerService } from './protocols';
 
 export class CustomerServiceImpl implements CustomerService {
     public afterRead(customerList: Customers): Customers {

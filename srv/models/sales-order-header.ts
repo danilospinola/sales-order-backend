@@ -1,5 +1,4 @@
-import { createEntityProxy } from "@cds-models/_";
-import { SalesOrderItemModel } from "./sales-order-item";
+import { SalesOrderItemModel } from './sales-order-item';
 
 type SalesOrderHeaderProps = {
     id: string;
@@ -88,7 +87,7 @@ export class SalesOrderHeaderModel {
             }
         });
         if (itemsErrors.length > 0) {
-            const messages = itemsErrors.join('\n -')
+            const messages = itemsErrors.join('\n -');
             return { hasErrors: true, errors: new Error(messages) };
         }
 
@@ -104,7 +103,7 @@ export class SalesOrderHeaderModel {
     }
 
     public calculateDiscount(): number {
-        let totalAmount = this.calculateTotalAmount();
+        const totalAmount = this.calculateTotalAmount();
         if (totalAmount > 30000) {
             return totalAmount * 0.9;
         }

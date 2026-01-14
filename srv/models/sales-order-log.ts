@@ -40,11 +40,11 @@ export class SalesOrderLogModel {
 
     toObject(): SalesOrderLogDbProps {
         return {
-             id: this.id,
-             header_id: this.headerId,
-             userData: this.userData,
-             orderData: this.orderData
-            };
+            id: this.id,
+            header_id: this.headerId,
+            userData: this.userData,
+            orderData: this.orderData
+        };
     }
 
 }

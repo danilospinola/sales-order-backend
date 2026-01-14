@@ -1,16 +1,15 @@
-import { User } from "@sap/cds";
-
-import { CreationPayloadValidationResult, SalesOrderHeaderService } from "./protocols";
-import { LoggedUserModel } from "srv/models/logged-user";
-import { SalesOrderHeader, SalesOrderHeaders, SalesOrderItem } from "@cds-models/sales";
-import { SalesOrderHeaderModel } from '../../models/sales-order-header'
-import { SalesOrderItemModel } from "../../models/sales-order-item";
-import { ProductRepository } from "../../repositories/product/protocols"
-import { CustomerRepository } from "srv/repositories/customer/protocols";
-import { ProductModel } from "srv/models/product";
-import { CustomerModel } from "srv/models/customer";
-import { SalesOrderLogModel } from "srv/models/sales-order-log";
-import { SalesOrderLogRepository } from "srv/repositories/sales-order-log/protocols";
+import { SalesOrderHeader, SalesOrderHeaders, SalesOrderItem } from '@cds-models/sales';
+import { CreationPayloadValidationResult, SalesOrderHeaderService } from './protocols';
+import { User } from '@sap/cds';
+import { CustomerModel } from 'srv/models/customer';
+import { CustomerRepository } from 'srv/repositories/customer/protocols';
+import { LoggedUserModel } from 'srv/models/logged-user';
+import { ProductModel } from 'srv/models/product';
+import { ProductRepository } from '../../repositories/product/protocols';
+import { SalesOrderHeaderModel } from '../../models/sales-order-header';
+import { SalesOrderItemModel } from '../../models/sales-order-item';
+import { SalesOrderLogModel } from 'srv/models/sales-order-log';
+import { SalesOrderLogRepository } from 'srv/repositories/sales-order-log/protocols';
 
 
 
@@ -27,8 +26,8 @@ export class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
         if (!products) {
             return {
                 hasErrors: true,
-                error: new Error(`Produto(s)  Inválido(s)`)
-            }
+                error: new Error('Produto(s)  Inválido(s)')
+            };
         }
 
         const items = this.getSalesOrderItems(params, products);
@@ -38,11 +37,11 @@ export class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
             return {
                 hasErrors: true,
                 error: new Error(`Cliente ${params.customer_id} Inválido`)
-            }
+            };
         }
         const HeadervalidationResult = header.validateCreationPayload({ customer_id: customer.id });
         if (HeadervalidationResult.hasErrors) {
-            return HeadervalidationResult
+            return HeadervalidationResult;
         }
 
         return {
@@ -74,10 +73,10 @@ export class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 
             const log = this.getSalesOrderLog(salesOrderHeader, user);
 
-            logs.push(log)
+            logs.push(log);
         }
 
-        await this.salesOrderLogRepository.create(logs)
+        await this.salesOrderLogRepository.create(logs);
 
     }
 
@@ -112,7 +111,7 @@ export class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
     }
 
     private async getCustomerById(params: SalesOrderHeader): Promise<CustomerModel | null> {
-        const customerId = params.customer_id as string
+        const customerId = params.customer_id as string;
         return this.customerRepository.findById(customerId);
     }
 
@@ -129,9 +128,9 @@ export class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 
     private getSalesOrderLog(salesOrderHeader: SalesOrderHeaderModel, user: LoggedUserModel): SalesOrderLogModel {
         return SalesOrderLogModel.create({
-                headerId: salesOrderHeader.id,
-                userData: user.toStringfiedObject(),
-                orderData: salesOrderHeader.toStringfiedObject()
-            });
+            headerId: salesOrderHeader.id,
+            userData: user.toStringfiedObject(),
+            orderData: salesOrderHeader.toStringfiedObject()
+        });
     }
 }

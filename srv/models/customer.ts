@@ -42,6 +42,6 @@ export class CustomerModel {
             firstName: this.props.firstName,
             id: this.props.id,
             lastName: this.props.lastName
-         };
+        };
     }
 }

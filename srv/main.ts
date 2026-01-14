@@ -1,5 +1,5 @@
-import cds, { Request, Service } from '@sap/cds';
-import { Customers, Product, Products, SalesOrderHeaders, SalesOrderItems } from '@cds-models/sales';
+import { Customers, SalesOrderHeaders } from '@cds-models/sales';
+import { Request, Service } from '@sap/cds';
 import { customerController } from './factories/controllers/customer';
 import { FullRequestParams } from './protocols';
 import { salesOrderHeaderController } from './factories/controllers/sales-order-header';
@@ -19,7 +19,7 @@ export default (service: Service) => {
     });
 
     service.after('READ', 'Customers', (customerslist: Customers, request) => {        
-        (request as unknown as FullRequestParams<Customers>).results = customerController.afterRead(customerslist)
+        (request as unknown as FullRequestParams<Customers>).results = customerController.afterRead(customerslist);
     });
     service.before('CREATE', 'SalesOrderHeaders', async (request: Request) => {
         const result = await salesOrderHeaderController.beforeCreate(request.data);
@@ -32,7 +32,7 @@ export default (service: Service) => {
 
 
     service.after('CREATE', 'SalesOrderHeaders', async (salesOrderHeaders: SalesOrderHeaders, request: Request) => {
-       await salesOrderHeaderController.afterCreate(salesOrderHeaders, request.user);
+        await salesOrderHeaderController.afterCreate(salesOrderHeaders, request.user);
     });
-}
+};
 
