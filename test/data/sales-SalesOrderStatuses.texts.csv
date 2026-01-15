@@ -1,0 +1,7 @@
+id,locale,description
+COMPLETED,pt-BR,Completado
+PENDING,pt-BR,Pendente
+REJECTED,pt-BR,Rejeitado
+COMPLETED,en,Completed
+PENDING,en,Pending
+REJECTED,en,Rejected
