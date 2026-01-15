@@ -1,5 +1,5 @@
 import { Customers } from '@cds-models/sales';
-import { CustomerModel } from 'srv/models/customer';
+import { CustomerModel } from '@/models/customer';
 import { CustomerService } from './protocols';
 
 export class CustomerServiceImpl implements CustomerService {

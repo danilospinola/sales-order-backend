@@ -264,9 +264,9 @@
   integrity sha512-X+4v4LBAT8HIt0zr28/kJNS15nlNlcM97vAMW+agLrmK134nyBiMwUMcp8BMhxlG9B2PykrnAKH56D9O3tfoBg==
 
 "@sap/cds@^9.6.1":
-  version "9.6.2"
-  resolved "https://registry.yarnpkg.com/@sap/cds/-/cds-9.6.2.tgz#b95994ea597b34f213ac89e54126f8b3bf6fec14"
-  integrity sha512-BBn2k3fZFfOC8Qmgo/kC9Sjs7ClhtVjf480++LmY/vtthfuybnLA2g4SdisTbCBVePALN44JNA339wVfHCAPSw==
+  version "9.6.3"
+  resolved "https://registry.yarnpkg.com/@sap/cds/-/cds-9.6.3.tgz#1c247c0a1087a5493c937b8d9136ddf68c859864"
+  integrity sha512-VZ5fDJt6ZAI6UzQnOzOgjgVjRRbI9Z1T1eVVCZ7FJkVTPSC05LVcKJ4nhjKgecE6sGkn7QyphIhu/933oYPccw==
   dependencies:
     "@sap/cds-compiler" "^6.3"
     "@sap/cds-fiori" "^2"
@@ -2145,9 +2145,9 @@ prettier-linter-helpers@^1.0.1:
     fast-diff "^1.1.2"
 
 prettier@^3.7.4:
-  version "3.7.4"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.7.4.tgz#d2f8335d4b1cec47e1c8098645411b0c9dff9c0f"
-  integrity sha512-v6UNi1+3hSlVvv8fSaoUbggEM5VErKmmpGA7Pl3HF8V6uKY7rvClBOJlH6yNwQtfTueNkGVpOv/mtWL9L4bgRA==
+  version "3.8.0"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.8.0.tgz#f72cf71505133f40cfa2ef77a2668cdc558fcd69"
+  integrity sha512-yEPsovQfpxYfgWNhCfECjG5AQaO+K3dp6XERmOepyPDVqcJm+bjyCVO3pmU+nAPe0N5dDvekfGezt/EIiRe1TA==
 
 prop-types@^15.8.1:
   version "15.8.1"
@@ -2795,9 +2795,9 @@ which-collection@^1.0.2:
     is-weakset "^2.0.3"
 
 which-typed-array@^1.1.16, which-typed-array@^1.1.19:
-  version "1.1.19"
-  resolved "https://registry.yarnpkg.com/which-typed-array/-/which-typed-array-1.1.19.tgz#df03842e870b6b88e117524a4b364b6fc689f956"
-  integrity sha512-rEvr90Bck4WZt9HHFC4DJMsjvu7x+r6bImz0/BrbWb7A2djJ8hnZMrWnHo9F8ssv0OMErasDhftrfROTyqSDrw==
+  version "1.1.20"
+  resolved "https://registry.yarnpkg.com/which-typed-array/-/which-typed-array-1.1.20.tgz#3fdb7adfafe0ea69157b1509f3a1cd892bd1d122"
+  integrity sha512-LYfpUkmqwl0h9A2HL09Mms427Q1RZWuOHsukfVcKRq9q95iQxdw0ix1JQrqbcDR9PH1QDwf5Qo8OZb5lksZ8Xg==
   dependencies:
     available-typed-arrays "^1.0.7"
     call-bind "^1.0.8"

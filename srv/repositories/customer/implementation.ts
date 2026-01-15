@@ -1,6 +1,6 @@
 import cds from '@sap/cds';
 
-import { CustomerModel, CustomerProps } from 'srv/models/customer';
+import { CustomerModel, CustomerProps } from '@/models/customer';
 import { CustomerRepository } from './protocols';
 
 export class customerRepositoryImpl implements CustomerRepository {

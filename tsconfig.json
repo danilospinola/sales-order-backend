@@ -12,7 +12,13 @@
     "baseUrl": "./",
     "rootDir": "./",
     "paths": {
-      "@models/*": ["./cds-models/*.index.ts"],
+      "@/*": ["./srv/*"],
+      "@cds-models/*": ["./@cds-models/*"],
+      "@models/*": ["./srv/models/*"],
+      "@controllers/*": ["./srv/controllers/*"],
+      "@services/*": ["./srv/services/*"],
+      "@repositories/*": ["./srv/repositories/*"],
+      "@factories/*": ["./srv/factories/*"]
     }
   },
   "include": ["srv"],

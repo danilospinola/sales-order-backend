@@ -1,3 +1,5 @@
+import './configs/module-alias';
+
 import { Customers, SalesOrderHeaders } from '@cds-models/sales';
 import { Request, Service } from '@sap/cds';
 import { customerController } from './factories/controllers/customer';

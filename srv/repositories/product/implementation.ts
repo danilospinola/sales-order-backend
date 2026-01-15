@@ -1,6 +1,6 @@
 import cds from '@sap/cds';
 
-import { ProductModel, ProductProps } from 'srv/models/product';
+import { ProductModel, ProductProps } from '@/models/product';
 import { ProductRepository } from '../product/protocols';
 import { Products } from '@cds-models/sales';
 

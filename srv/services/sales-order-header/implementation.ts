@@ -1,15 +1,15 @@
 import { SalesOrderHeader, SalesOrderHeaders, SalesOrderItem } from '@cds-models/sales';
 import { CreationPayloadValidationResult, SalesOrderHeaderService } from './protocols';
 import { User } from '@sap/cds';
-import { CustomerModel } from 'srv/models/customer';
-import { CustomerRepository } from 'srv/repositories/customer/protocols';
-import { LoggedUserModel } from 'srv/models/logged-user';
-import { ProductModel } from 'srv/models/product';
+import { CustomerModel } from '@/models/customer';
+import { CustomerRepository } from '@/repositories/customer/protocols';
+import { LoggedUserModel } from '@/models/logged-user';
+import { ProductModel } from '@/models/product';
 import { ProductRepository } from '../../repositories/product/protocols';
 import { SalesOrderHeaderModel } from '../../models/sales-order-header';
 import { SalesOrderItemModel } from '../../models/sales-order-item';
-import { SalesOrderLogModel } from 'srv/models/sales-order-log';
-import { SalesOrderLogRepository } from 'srv/repositories/sales-order-log/protocols';
+import { SalesOrderLogModel } from '@/models/sales-order-log';
+import { SalesOrderLogRepository } from '@/repositories/sales-order-log/protocols';
 
 
 

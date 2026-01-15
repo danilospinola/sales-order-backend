@@ -1,4 +1,4 @@
-import { SalesOrderLogModel } from 'srv/models/sales-order-log';
+import { SalesOrderLogModel } from '@/models/sales-order-log';
 import { SalesOrderLogRepository } from './protocols';
 import cds from '@sap/cds';
 
