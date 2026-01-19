@@ -5,7 +5,7 @@ import { Request, Service } from '@sap/cds';
 import { customerController } from '@/factories/controllers/customer';
 import { FullRequestParams } from '@/routes/protocols';
 import { salesOrderHeaderController } from '@/factories/controllers/sales-order-header';
-
+import { salesReportService } from '@/factories/services/sales-reports'
 
 
 export default (service: Service) => {
@@ -36,5 +36,10 @@ export default (service: Service) => {
     service.after('CREATE', 'SalesOrderHeaders', async (salesOrderHeaders: SalesOrderHeaders, request: Request) => {
         await salesOrderHeaderController.afterCreate(salesOrderHeaders, request.user);
     });
+
+    service.on('getSalesReportByDays', async (request: Request) => {
+        const days = request.data?.days || 7;
+        return salesReportService.findByDays(days);
+    })
 };
 
