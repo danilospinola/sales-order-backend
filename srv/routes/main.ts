@@ -6,6 +6,7 @@ import { customerController } from '@/factories/controllers/customer';
 import { FullRequestParams } from '@/routes/protocols';
 import { salesOrderHeaderController } from '@/factories/controllers/sales-order-header';
 import { salesReportService } from '@/factories/services/sales-reports'
+import { salesReportController } from '@/factories/controllers/sales-report';
 
 
 export default (service: Service) => {
@@ -40,6 +41,10 @@ export default (service: Service) => {
     service.on('getSalesReportByDays', async (request: Request) => {
         const days = request.data?.days || 7;
         return salesReportService.findByDays(days);
+    })
+    service.on('getSalesReportByCustomerId', async (request: Request) => {
+        const [{id: customerId}] = request.params as unknown as { id: string}[];
+        return salesReportController.findByCustomerId(customerId);
     })
 };
 
