@@ -9,6 +9,9 @@ type SalesOrderHeaderProps = {
 
 type SalesOrderHeaderPropsWithoutIdAndTotalAmount = Omit<SalesOrderHeaderProps, 'id' | 'totalAmount'>;
 
+type SalesOrderHeaderPropsWithSnakeCaseCustomerId = Omit<SalesOrderHeaderProps, 'customer_id'> & {
+    customer_id: SalesOrderHeaderProps['customer_id'];
+};
 
 type CreationPayload = {
     customer_id: SalesOrderHeaderProps['customer_id'];
@@ -120,5 +123,14 @@ export class SalesOrderHeaderModel {
 
     public toStringfiedObject(): string {
         return JSON.stringify(this.props);
+    }
+
+    public toCreationObject(): SalesOrderHeaderPropsWithSnakeCaseCustomerId {
+        return {
+            id: this.props.id,
+            customer_id: this.props.customer_id,
+            totalAmount: this.calculateTotalAmount(),
+            items: this.props.items
+        };
     }
 }
