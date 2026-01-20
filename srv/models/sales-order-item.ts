@@ -10,6 +10,10 @@ type SalesOrderItemProps = {
 
 type SalesOrderItemPropsWithoutId = Omit<SalesOrderItemProps, 'id'>;
 
+export type SalesOrderItemPropsWithSnakeCaseProductId = Omit<SalesOrderItemProps, 'productId' | 'products'> & {
+    product_id: SalesOrderItemProps['productId'];
+}
+
 type CreationPayload = {
     product_id: SalesOrderItemProps['productId'];
 };
@@ -59,5 +63,14 @@ export class SalesOrderItemModel {
             return { hasErrors: true, errors: new Error(`Produto(s) ${product.name} Fora de Estoque`) };
         }
         return { hasErrors: false };
+    }
+
+    public toCreationObject(): SalesOrderItemPropsWithSnakeCaseProductId {
+        return {
+            id: this.id,
+            product_id: this.productId,
+            price: this.price,
+            quantity: this.quantity
+        };
     }
 }

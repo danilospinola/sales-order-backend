@@ -1,4 +1,4 @@
-import { SalesOrderItemModel } from './sales-order-item';
+import { SalesOrderItemModel, SalesOrderItemPropsWithSnakeCaseProductId } from './sales-order-item';
 
 type SalesOrderHeaderProps = {
     id: string;
@@ -9,8 +9,9 @@ type SalesOrderHeaderProps = {
 
 type SalesOrderHeaderPropsWithoutIdAndTotalAmount = Omit<SalesOrderHeaderProps, 'id' | 'totalAmount'>;
 
-type SalesOrderHeaderPropsWithSnakeCaseCustomerId = Omit<SalesOrderHeaderProps, 'customer_id'> & {
+type SalesOrderHeaderPropsWithSnakeCaseCustomerId = Omit<SalesOrderHeaderProps, 'customer_id' | 'items'> & {
     customer_id: SalesOrderHeaderProps['customer_id'];
+    items: SalesOrderItemPropsWithSnakeCaseProductId[];
 };
 
 type CreationPayload = {
@@ -130,7 +131,7 @@ export class SalesOrderHeaderModel {
             id: this.props.id,
             customer_id: this.props.customer_id,
             totalAmount: this.calculateTotalAmount(),
-            items: this.props.items
+            items: this.props.items.map(item => item.toCreationObject())
         };
     }
 }
