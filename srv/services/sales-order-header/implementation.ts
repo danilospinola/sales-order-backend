@@ -17,7 +17,7 @@ import { SalesOrderHeaderRepository } from '@/repositories/sales-order-header/pr
 
 export class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
     constructor(
-        private readonly salesOrderHeaderRepository: SalesOrderHeaderRepository, 
+        private readonly salesOrderHeaderRepository: SalesOrderHeaderRepository,
         private readonly customerRepository: CustomerRepository,
         private readonly salesOrderLogRepository: SalesOrderLogRepository,
         private readonly productRepository: ProductRepository
@@ -76,13 +76,13 @@ export class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
         const bulkCreateHeaders: SalesOrderHeaderModel[] = []
         for (const headerObject of headers) {
             const productValidation = await this.validateProductsOnCreation(headerObject);
-            if(productValidation.hasErrors){
+            if (productValidation.hasErrors) {
                 return productValidation;
             }
-            const items = this.getSalesOrderItems(headerObject,productValidation.products as ProductModel[]);
+            const items = this.getSalesOrderItems(headerObject, productValidation.products as ProductModel[]);
             const header = this.getsalesOrderHeader(headerObject, items);
             const customerValidationResult = await this.validateCustomerOnCreation(headerObject);
-            if(customerValidationResult.hasErrors){
+            if (customerValidationResult.hasErrors) {
                 return customerValidationResult;
             }
             const HeadervalidationResult = header.validateCreationPayload({ customer_id: (customerValidationResult.customer as CustomerModel).id });
@@ -96,6 +96,23 @@ export class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
         return this.serializeBulkCreateResult(bulkCreateHeaders);
     }
 
+    public async cloneSalesOrder(id: string, loggedUser: User): Promise<CreationPayloadValidationResult> {
+        const header = await this.salesOrderHeaderRepository.findCompleteSalesOrderById(id);
+        if (!header) {
+            return {
+                hasErrors: true,
+                error: new Error('Pedido de Venda não encontrado')
+            };
+        }
+        const HeadervalidationResult = header.validateCreationPayload({ customer_id: header.CustomerId });
+        if (HeadervalidationResult.hasErrors) {
+            return HeadervalidationResult;
+        }
+        await this.salesOrderHeaderRepository.bulkCreate([header]);
+        await this.afterCreate([header.toCreationObject()], loggedUser);
+        return this.serializeBulkCreateResult([header]);
+    }
+
     private serializeBulkCreateResult(headers: SalesOrderHeaderModel[]): CreationPayloadValidationResult {
         return {
             hasErrors: false,
@@ -104,31 +121,31 @@ export class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
     }
 
     private async validateProductsOnCreation(header: SalesOrderHeader | BulkCreateSalesOrderPayload): Promise<CreationPayloadValidationResult> {
-            const products = await this.getproductsByIds(header);
-            if (!products) {
-                return {
-                    hasErrors: true,
-                    error: new Error('Produto(s)  Inválido(s)')
-                };
-            }
+        const products = await this.getproductsByIds(header);
+        if (!products) {
             return {
-                hasErrors: false,
-                products
+                hasErrors: true,
+                error: new Error('Produto(s)  Inválido(s)')
             };
+        }
+        return {
+            hasErrors: false,
+            products
+        };
     }
 
     private async validateCustomerOnCreation(header: SalesOrderHeader | BulkCreateSalesOrderPayload): Promise<CreationPayloadValidationResult> {
-            const customer = await this.getCustomerById(header);
-            if (!customer) {
-                return {
-                    hasErrors: true,
-                    error: new Error(`Cliente Inválido`)
-                };
-            }
+        const customer = await this.getCustomerById(header);
+        if (!customer) {
             return {
-                hasErrors: false,
-                customer
+                hasErrors: true,
+                error: new Error(`Cliente Inválido`)
             };
+        }
+        return {
+            hasErrors: false,
+            customer
+        };
     }
     private async getproductsByIds(params: SalesOrderHeader | BulkCreateSalesOrderPayload): Promise<ProductModel[] | null> {
         const productsIds: string[] = params.items?.map((item) => item.product_id) as string[];

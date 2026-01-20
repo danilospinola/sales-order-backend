@@ -79,11 +79,21 @@ GET http://{{localhost}}/SalesOrderHeaders?$skip=10&$top=5
 ###
 
 # Buscando dados com $search
-GET http://{{localhost}}/Customers?$search=firstName2
+GET http://{{localhost}}/SalesOrderHeaders?$search=firstName2
 Content-Type: application/json
 
 ###
 
 # Ordenando dados com $orderby
-GET http://{{localhost}}/Customers?$orderby=firstName desc,lastName
+GET http://{{localhost}}/SalesOrderHeaders?$orderby=firstName desc,lastName
 Content-Type: application/json
+
+### Funcionalidade de Clonar Pedidos
+
+POST http://{{localhost}}/SalesOrderHeaders(26204170-b136-4537-9b20-e913dec61e09)/cloneSalesOrder
+Content-Type: application/json
+Authorization: Basic ZGFuaWxvOjEyMzQ1Ng==
+
+{
+  
+}

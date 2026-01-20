@@ -50,5 +50,10 @@ export default (service: Service) => {
         const {user, data} = request
         return salesOrderHeaderController.bulkCreate(data.Payload, user);
     });
+    service.on('cloneSalesOrder', async (request: Request) => {
+        const [{id}] = request.params as unknown as { id: string}[];
+        const {user} = request
+        return salesOrderHeaderController.cloneSalesOrder(id, user);
+    });
 };
 
