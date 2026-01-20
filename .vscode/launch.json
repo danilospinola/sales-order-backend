@@ -2,19 +2,24 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "cds serve",
+      "name": "Debug app sales order",
       "request": "launch",
       "type": "node",
       "cwd": "${workspaceFolder}",
-      "runtimeExecutable": "cds",
-      "args": [
-        "serve",
-        "--with-mocks",
-        "--in-memory?"
+      "runtimeExecutable": "npx",
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "runtimeArgs": [
+        "cds-tsx",
+        "watch",
       ],
       "skipFiles": [
         "<node_internals>/**"
-      ]
+      ],
+      "sourceMaps": true,
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
     }
   ]
 }

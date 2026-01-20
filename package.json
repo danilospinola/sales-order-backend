@@ -25,10 +25,9 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.53.0"
   },
-  "scripts": {
-    "start": "cds-serve",
-    "dev": "cds-tsx watch",
-    "lint": "eslint ./srv"
-  },
-  "private": true
+"scripts": {
+  "start": "cds-serve",
+  "dev": "cds watch", 
+  "lint": "eslint ./srv"
+}
 }
