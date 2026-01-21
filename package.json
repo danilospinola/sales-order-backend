@@ -20,14 +20,20 @@
     "eslint-plugin-react": "^7.37.5",
     "git-commit-msg-linter": "^5.0.8",
     "globals": "^17.0.0",
+    "mbt": "^1.2.34",
+    "npm-run-all": "^4.1.5",
     "prettier": "^3.7.4",
+    "rimraf": "^6.1.2",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.53.0"
   },
-"scripts": {
-  "start": "cds-serve",
-  "dev": "cds watch", 
-  "lint": "eslint ./srv"
-}
+  "scripts": {
+    "start": "cds-serve",
+    "dev": "cds watch",
+    "clean": "rimraf gen dist mta_archives MakeFile*",
+    "lint": "eslint ./srv",
+    "build": "mbt build --mtar sales-order-backend",
+    "bd": "npm-run-all clean build"
+  }
 }

@@ -29,6 +29,21 @@
                 }
             }
         }
+    },
+    "[production]": {
+        "requires": {
+            "db": {
+                "kind": "hana",
+                "model": "db"
+            },
+            "uaa": {
+                "kind": "xsuaa"
+            }
+        },
+        "hana": {
+            "deploy-format": "hdbtable"
+        }
     }
+
     
 }
