@@ -3,6 +3,7 @@ using { db.types.SalesReport, db.types.BulkCreateSalesOrder } from '../../db/typ
 
 
 @requires: 'authenticated-user'
+@path: '/sales-order'
 //Entities
 service MainService {
     entity SalesOrderHeaders as projection on sales.SalesOrderHeaders actions{
