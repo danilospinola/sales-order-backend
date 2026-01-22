@@ -3,7 +3,7 @@
     "routes": [
         {
             "source": "^/sales-order/(.*)",
-            "target": "srv-api",
+            "destination": "srv-api",
             "csrfProtection": true,
             "authenticationType": "xsuaa"
         }

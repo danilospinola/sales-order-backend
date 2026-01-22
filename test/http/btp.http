@@ -1,0 +1,20 @@
+@authApiBaseUrl= 3d6b55abtrial.authentication.us10.hana.ondemand.com
+
+@apiBaseUrl= 3d6b55abtrial-dev-sales-order-backend-service.cfapps.us10-001.hana.ondemand.com/
+POST https://{{authApiBaseUrl}}/oauth/token
+Authorization: Basic
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&username=&password=
+
+### Criar prduto na Sales Order API
+
+POST https://{{apiBaseUrl}}sales-order/Products
+Authorization: bearer
+Content-Type: application/json
+
+{
+    "name": "Pomada para cabelo",
+    "price": 150,
+    "stock": 500 
+}
