@@ -21,8 +21,12 @@ export default (service: Service) => {
         }
     });
 
-    service.after('READ', 'Customers', (customerslist: Customers, request) => {        
-        (request as unknown as FullRequestParams<Customers>).results = customerController.afterRead(customerslist);
+    service.after('READ', 'Customers', (customerslist: Customers, request) => {
+        const result = customerController.afterRead(customerslist);
+        if (result.status >= 400) {
+            return request.error(result.status, result.data as string);
+        }
+        (request as unknown as FullRequestParams<Customers>).results = result.data as Customers;
     });
     service.before('CREATE', 'SalesOrderHeaders', async (request: Request) => {
         const result = await salesOrderHeaderController.beforeCreate(request.data);
